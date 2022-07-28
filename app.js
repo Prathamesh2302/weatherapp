@@ -3,13 +3,8 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
 const axios = require("axios");
-
-
-
 app.get('/', (req, res) => {
-
-
-
+    console.log("We are live");
 
 });
 
@@ -18,7 +13,10 @@ app.post("/getweather", express.json(), (req, res) => {
     //calling intent tag
     console.log(req.body.fulfillmentInfo.tag);
     //parameter
-    axios.get('https://api.weatherapi.com/v1/current.json?key=c9f18800ca584669bf672623222706&q=delhi')
+    const city = req.body.sessionInfo.parameters.city;
+    console.log("city fetched" + city);
+
+    axios.get(`https://api.weatherapi.com/v1/current.json?key=c9f18800ca584669bf672623222706&q=${city}`)
         .then(function (response) {
             if (response.status >= 400) {
                 throw new Error("Bad response from server");
@@ -52,11 +50,6 @@ app.post("/getweather", express.json(), (req, res) => {
             console.log(err)
         });
 
-    const city = req.body.sessionInfo.parameters.city;
-
-    const temp =
-
-        console.log("city fetched" + city);
 
 
 });
