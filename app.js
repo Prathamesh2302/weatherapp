@@ -7,12 +7,12 @@ const axios = require("axios");
 
 
 app.get('/', (req, res) => {
-    axios.get('https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=7bc7b1073968566379e429f067b344f9').then(function (response) {
+    axios.get('https://api.weatherapi.com/v1/current.json?key=c9f18800ca584669bf672623222706&q=delhi').then(function (response) {
         if (response.status >= 400) {
             throw new Error("Bad response from server");
         }
         //return response.json();
-        console.log(response.data.wind.speed);
+        console.log(response);
         res.send(response.data);
 
 
@@ -29,22 +29,14 @@ app.get('/', (req, res) => {
 });
 
 //Webhook function structure
-app.post("/start", express.json(), (req, res) => {
+app.post("/getweather", express.json(), (req, res) => {
     //calling intent tag
     console.log(req.body.fulfillmentInfo.tag);
     //parameter
-    //const par = req.body.sessionInfo.parameters.person;
-    // const city = req.body.sessionInfo.parameters.city;
-    // console.log(par);
 
-    fetch("https://api.instantwebtools.net/v1/airlines")
-        .then((response) => {
-            console.log(response)
+    const city = req.body.sessionInfo.parameters.city;
 
-        })
-        .catch(function (err) {
-            console.log("Unable to fetch -", err);
-        });
+    console.log("city fetched" + city);
 
     const msg = "hello welcome"
     const jsonResponse = {
