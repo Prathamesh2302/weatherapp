@@ -30,7 +30,7 @@ app.post("/getweather", express.json(), (req, res) => {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: [temp],
+                                text: ["Temperature is " + temp],
                             }
                         }]
                     },
