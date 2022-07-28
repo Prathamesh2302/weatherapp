@@ -7,22 +7,7 @@ const axios = require("axios");
 
 
 app.get('/', (req, res) => {
-    axios.get('https://api.weatherapi.com/v1/current.json?key=c9f18800ca584669bf672623222706&q=delhi').then(function (response) {
-        if (response.status >= 400) {
-            throw new Error("Bad response from server");
-        }
-        //return response.json();
-        console.log(response);
-        res.send(response.data);
 
-
-    }).then(function (data) {
-        if (data === "success") {
-            this.setState({ msg: "User has been deleted." });
-        }
-    }).catch(function (err) {
-        console.log(err)
-    });
 
 
 
@@ -33,23 +18,46 @@ app.post("/getweather", express.json(), (req, res) => {
     //calling intent tag
     console.log(req.body.fulfillmentInfo.tag);
     //parameter
+    axios.get('https://api.weatherapi.com/v1/current.json?key=c9f18800ca584669bf672623222706&q=delhi')
+        .then(function (response) {
+            if (response.status >= 400) {
+                throw new Error("Bad response from server");
+            }
+            else {
+                const temp = (response.data.current.temp_f);
+                console.log("temperature is " + temp);
+                const jsonResponse = {
+                    fulfillment_response: {
+                        messages: [{
+                            text: {
+                                text: [temp],
+                            }
+                        }]
+                    },
+                };
+                res.status(200).send(jsonResponse);
+                console.log(jsonResponse);
+
+            }
+            //return response.json();
+
+            // res.send(response.data);
+
+
+        }).then(function (data) {
+            if (data === "success") {
+                this.setState({ msg: "User has been deleted." });
+            }
+        }).catch(function (err) {
+            console.log(err)
+        });
 
     const city = req.body.sessionInfo.parameters.city;
 
-    console.log("city fetched" + city);
+    const temp =
 
-    const msg = "hello welcome"
-    const jsonResponse = {
-        fulfillment_response: {
-            messages: [{
-                text: {
-                    text: ['msg'],
-                }
-            }]
-        },
-    };
-    res.status(200).send(jsonResponse);
-    console.log(jsonResponse);
+        console.log("city fetched" + city);
+
 
 });
 
