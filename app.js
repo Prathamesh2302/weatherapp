@@ -48,7 +48,8 @@ app.post("/getweather", express.json(), (req, res) => {
             }]
         },
     };
-    res.json(jsonResponse);
+    res.status(200).send(jsonResponse);
+    console.log(jsonResponse);
 
 });
 
