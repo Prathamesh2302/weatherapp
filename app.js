@@ -22,14 +22,13 @@ app.post("/getweather", express.json(), (req, res) => {
                 throw new Error("Bad response from server");
             }
             else {
-                const tempC = (response.data.current.temp_c);
-                const feelslike = (response.data.feelslike_c)
-                console.log("temperature is " + tempC);
+                const temp = (response.data.current.temp_f);
+                console.log("temperature is " + temp);
                 const jsonResponse = {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: ["Temperature is " + tempC + " Feels like " + feelslike_c],
+                                text: ["Temperature is " + temp],
                             }
                         }]
                     },
@@ -41,6 +40,12 @@ app.post("/getweather", express.json(), (req, res) => {
             //return response.json();
 
             // res.send(response.data);
+
+
+        }).then(function (data) {
+            if (data === "success") {
+                this.setState({ msg: "User has been deleted." });
+            }
         }).catch(function (err) {
             console.log(err)
         });
@@ -48,7 +53,6 @@ app.post("/getweather", express.json(), (req, res) => {
 
 
 });
-
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
