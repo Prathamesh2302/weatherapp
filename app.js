@@ -54,6 +54,59 @@ app.post("/getweather", express.json(), (req, res) => {
 
 });
 
+
+app.post("/forecast", express.json(), (req, res) => {
+    //calling intent tag
+    console.log(req.body.fulfillmentInfo.tag);
+    //parameter
+    const city = req.body.sessionInfo.parameters.forecastcity;
+    console.log("city fetched" + city);
+
+    axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=3&q=${city}`)
+        .then(function (response) {
+            if (response.status >= 400) {
+                throw new Error("Bad response from server");
+            }
+            else {
+                const wdata = response.forecast.forecastday;
+                console.log(wdata);
+                var str = ""
+                for (let i = 0; i < wdata.length; i++) {
+                    var str1 = `Date :, ${wdata[i]['date']}
+                    Max Temp : , ${wdata[i]['day'].maxtemp_c}
+                    Min Temp : , ${wdata[i]['day'].mintemp_c}`
+
+                    str = str + str1;
+                }
+
+                const jsonResponse = {
+                    fulfillment_response: {
+                        messages: [{
+                            text: {
+                                text: ["Following is the weather forecast for 5 days" + str],
+                            }
+                        }]
+                    },
+                };
+                res.status(200).send(jsonResponse);
+                console.log(jsonResponse);
+
+            }
+            //return response.json();
+
+            // res.send(response.data);
+
+
+        }).then(function (data) {
+            if (data === "success") {
+                this.setState({ msg: "User has been deleted." });
+            }
+        }).catch(function (err) {
+            console.log(err)
+        });
+
+})
+
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
 });
