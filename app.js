@@ -24,13 +24,13 @@ app.post("/getweather", express.json(), (req, res) => {
                 throw new Error("Bad response from server");
             }
             else {
-                const temp = (response.data.current.temp_f);
+                const temp = (response.data.current.temp_c);
                 console.log("temperature is " + temp);
                 const jsonResponse = {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: ["Temperature is " + temp],
+                                text: ["Temperature is " + temp + " degree celcius"],
                             }
                         }]
                     },
