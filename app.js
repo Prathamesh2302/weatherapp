@@ -68,7 +68,7 @@ app.post("/forecast", express.json(), (req, res) => {
                 throw new Error("Bad response from server");
             }
             else {
-                const wdata = response.forecast.forecastday;
+                const wdata = response.data.forecast.forecastday;
                 console.log(wdata);
                 var str = ""
                 for (let i = 0; i < wdata.length; i++) {
