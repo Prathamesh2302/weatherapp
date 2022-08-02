@@ -6,9 +6,11 @@ const axios = require("axios");
 app.get('/', (req, res) => {
     console.log("We are live");
 
+    res.status(200).send("We are live!!!");
+
 });
 
-//Webhook function structure
+//Webhook for getting temperature of city
 app.post("/getweather", express.json(), (req, res) => {
     //calling intent tag
     console.log(req.body.fulfillmentInfo.tag);
@@ -42,25 +44,20 @@ app.post("/getweather", express.json(), (req, res) => {
             // res.send(response.data);
 
 
-        }).then(function (data) {
-            if (data === "success") {
-                this.setState({ msg: "User has been deleted." });
-            }
-        }).catch(function (err) {
-            console.log(err)
+
         });
 
 
 
 });
 
-
+// webhoom for weather forercast
 app.post("/forecast", express.json(), (req, res) => {
     //calling intent tag
     console.log(req.body.fulfillmentInfo.tag);
     //parameter
     const city = req.body.sessionInfo.parameters.forecastcity;
-    console.log("city fetched" + city);
+    console.log("city fetched " + city);
 
     axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=3&q=${city}`)
         .then(function (response) {
@@ -92,17 +89,8 @@ app.post("/forecast", express.json(), (req, res) => {
                 console.log(jsonResponse);
 
             }
-            //return response.json();
-
-            // res.send(response.data);
 
 
-        }).then(function (data) {
-            if (data === "success") {
-                this.setState({ msg: "User has been deleted." });
-            }
-        }).catch(function (err) {
-            console.log(err)
         });
 
 })
