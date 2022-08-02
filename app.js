@@ -83,7 +83,7 @@ app.post("/forecast", express.json(), (req, res) => {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: ["Following is the weather forecast for 5 days" + str],
+                                text: ["Following is the weather forecast for 3 days" + str],
                             }
                         }]
                     },
