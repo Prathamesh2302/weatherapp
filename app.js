@@ -59,7 +59,7 @@ app.post("/forecast", express.json(), (req, res) => {
     const city = req.body.sessionInfo.parameters.forecastcity;
     console.log("city fetched " + city);
 
-    axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=5&q=${city}`)
+    axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=3&q=${city}`)
         .then(function (response) {
             if (response.status >= 400) {
                 throw new Error("Bad response from server");
@@ -70,9 +70,9 @@ app.post("/forecast", express.json(), (req, res) => {
                 var str = ""
                 for (let i = 0; i < wdata.length; i++) {
                     var str1 = `Date :, ${wdata[i]['date']}
-                    Max Temp : , ${wdata[i]['day'].maxtemp_c}
-                    Min Temp : , ${wdata[i]['day'].mintemp_c}
-                    It will be : , ${wdata[i]['day'].condition.text}`
+                    Max Temp : ${wdata[i]['day'].maxtemp_c}
+                    Min Temp : ${wdata[i]['day'].mintemp_c}
+                    It will be : ${wdata[i]['day'].condition.text}\n`
 
                     str = str + str1;
                 }
@@ -82,7 +82,7 @@ app.post("/forecast", express.json(), (req, res) => {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: ["Following is the weather forecast for 5 days\n" + str],
+                                text: ["Following is the weather forecast for 3 days\n" + str],
                             }
                         }]
                     },
