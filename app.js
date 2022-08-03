@@ -100,34 +100,27 @@ app.post("/daywiseforecast", express.json(), (req, res) => {
     //calling intent tag
     console.log(req.body.fulfillmentInfo.tag);
     //parameter
-    const loc = req.body.sessionInfo.parameters.city;
-    const datetime = req.body.sessionInfo.parameters.date;
-    console.log("city fetched " + loc);
+    const location = req.body.sessionInfo.parameters.loc;
+    const datetime = req.body.sessionInfo.parameters.date.day + "-" + req.body.sessionInfo.parameters.date.month + "-" + req.body.sessionInfo.parameters.date.year;
+    console.log("city fetched " + Location);
     console.log("city fetched " + datetime);
 
-    axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=3&q=${loc}`)
+    axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=3&q=${location}`)
         .then(function (response) {
             if (response.status >= 400) {
                 throw new Error("Bad response from server");
             }
             else {
-                const wdata = response.data.forecast.forecastday;
-                console.log(wdata);
-                var str = ""
-                for (let i = 0; i < wdata.length; i++) {
-                    var str1 = `Date :, ${wdata[i]['date']}
-                    Max Temp : , ${wdata[i]['day'].maxtemp_c}
-                    Min Temp : , ${wdata[i]['day'].mintemp_c}`
-
-                    str = str + str1;
-                }
+                const dates = response.data.forecast.forecastday.map(({ date }) => {
+                    return { date }
+                });
 
 
                 const jsonResponse = {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: ["Following is the weather forecast for 3 days" + str],
+                                text: ["hii"],
                             }
                         }]
                     },
