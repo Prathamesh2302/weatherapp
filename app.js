@@ -70,8 +70,8 @@ app.post("/forecast", express.json(), (req, res) => {
                 var str = ""
                 for (let i = 0; i < wdata.length; i++) {
                     var str1 = `Date :, ${wdata[i]['date']}
-                    Max Temp : ${wdata[i]['day'].maxtemp_c}
-                    Min Temp : ${wdata[i]['day'].mintemp_c}
+                    Max Temp°C: ${wdata[i]['day'].maxtemp_c}
+                    Min Temp °C : ${wdata[i]['day'].mintemp_c}
                     Condition : ${wdata[i]['day'].condition.text}\n\n`
 
                     str = str + str1;
@@ -117,8 +117,8 @@ app.post("/daywiseforecast", express.json(), (req, res) => {
 
 
                 var str1 = `Date : ${wdata[0]['date']}
-                    Max Temp : ${wdata[0]['day'].maxtemp_c}
-                    Min Temp : ${wdata[0]['day'].mintemp_c}
+                    Max Temp °C : ${wdata[0]['day'].maxtemp_c}
+                    Min Temp °C: ${wdata[0]['day'].mintemp_c}
                     Condition : ${wdata[0]['day']['condition'].text}`
                 console.log(str1);
 
