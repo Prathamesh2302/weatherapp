@@ -102,8 +102,8 @@ app.post("/daywiseforecast", express.json(), (req, res) => {
     //parameter
     const location = req.body.sessionInfo.parameters.loc;
     const datetime = req.body.sessionInfo.parameters.date.day + "-" + req.body.sessionInfo.parameters.date.month + "-" + req.body.sessionInfo.parameters.date.year;
-    console.log("city fetched " + Location);
-    console.log("city fetched " + datetime);
+    console.log("city fetched " + location);
+    console.log("date fetched " + datetime);
 
     axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=3&q=${location}`)
         .then(function (response) {
