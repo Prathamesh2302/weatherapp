@@ -82,7 +82,7 @@ app.post("/forecast", express.json(), (req, res) => {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: ["Following is the weather forecast for 3 days\n" + str],
+                                text: ["Following is the weather forecast for 3 days\n\n" + str],
                             }
                         }]
                     },
@@ -115,10 +115,10 @@ app.post("/daywiseforecast", express.json(), (req, res) => {
                 const wdata = response.data.forecast.forecastday;
                 console.log(wdata);
 
-                var str1 = `Date :, ${wdata[i]['date']}
-                    Max Temp °C: , ${wdata[i]['day'].maxtemp_c}
-                    Min Temp °C: , ${wdata[i]['day'].mintemp_c}
-                    It will be : , ${wdata[i]['day'].condition.text}`
+                var str1 = `Date :${wdata[i]['date']}
+                    Max Temp °C: ${wdata[i]['day'].maxtemp_c}
+                    Min Temp °C: ${wdata[i]['day'].mintemp_c}
+                    It will be : ${wdata[i]['day'].condition.text}`
 
                 const jsonResponse = {
                     fulfillment_response: {
@@ -129,8 +129,9 @@ app.post("/daywiseforecast", express.json(), (req, res) => {
                         }]
                     },
                 };
-                res.status(200).send(jsonResponse);
                 console.log(jsonResponse);
+                res.status(200).send(jsonResponse);
+
 
             }
 
