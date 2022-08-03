@@ -59,7 +59,7 @@ app.post("/forecast", express.json(), (req, res) => {
     const city = req.body.sessionInfo.parameters.forecastcity;
     console.log("city fetched " + city);
 
-    axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=3&q=${city}`)
+    axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=5&q=${city}`)
         .then(function (response) {
             if (response.status >= 400) {
                 throw new Error("Bad response from server");
@@ -71,7 +71,8 @@ app.post("/forecast", express.json(), (req, res) => {
                 for (let i = 0; i < wdata.length; i++) {
                     var str1 = `Date :, ${wdata[i]['date']}
                     Max Temp : , ${wdata[i]['day'].maxtemp_c}
-                    Min Temp : , ${wdata[i]['day'].mintemp_c}`
+                    Min Temp : , ${wdata[i]['day'].mintemp_c}
+                    It will be : , ${wdata[i]['day'].condition.text}`
 
                     str = str + str1;
                 }
@@ -81,7 +82,7 @@ app.post("/forecast", express.json(), (req, res) => {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: ["Following is the weather forecast for 3 days" + str],
+                                text: ["Following is the weather forecast for 5 days\n" + str],
                             }
                         }]
                     },
@@ -105,22 +106,25 @@ app.post("/daywiseforecast", express.json(), (req, res) => {
     console.log("city fetched " + location);
     console.log("date fetched " + datetime);
 
-    axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=3&q=${location}`)
+    axios.get(`https://api.weatherapi.com/v1/forecast.json?key=c9f18800ca584669bf672623222706&days=3&q=${location}&dt=${datetime}`)
         .then(function (response) {
             if (response.status >= 400) {
                 throw new Error("Bad response from server");
             }
             else {
-                const dates = response.data.forecast.forecastday.map(({ date }) => {
-                    return { date }
-                });
+                const wdata = response.data.forecast.forecastday;
+                console.log(wdata);
 
+                var str1 = `Date :, ${wdata[i]['date']}
+                    Max Temp °C: , ${wdata[i]['day'].maxtemp_c}
+                    Min Temp °C: , ${wdata[i]['day'].mintemp_c}
+                    It will be : , ${wdata[i]['day'].condition.text}`
 
                 const jsonResponse = {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: ["hii"],
+                                text: [str1],
                             }
                         }]
                     },
