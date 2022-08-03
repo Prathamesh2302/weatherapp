@@ -124,7 +124,7 @@ app.post("/daywiseforecast", express.json(), (req, res) => {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: [str1],
+                                text: ["The weather in " + location + " on " + datetime + "will be " + str1],
                             }
                         }]
                     },
