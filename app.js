@@ -32,10 +32,6 @@ app.post("/getweather", express.json(), (req, res) => {
                             text: {
                                 text: ["Temperature is " + temp + " degree celcius"],
                             }
-                        }, {
-                            text: {
-                                text: ["Temperature is " + temp + " degree celcius"],
-                            }
                         }]
                     },
                 };
