@@ -1,0 +1,24 @@
+{
+    "fulfillment_response": {
+        "messages": [
+            {
+                "text": {
+                    : [
+                        "Please select anyone"
+                    ]
+                },
+                "payload": {
+                    "richContent": [
+                        [
+                            {
+                                "type": "image",
+                                "rawUrl": "cdn.weatherapi.com/weather/64x64/day/113.png",
+                                "accessibilityText": "Example logo"
+                            }
+                        ]
+                    ]
+                }
+            }
+        ]
+    }
+}

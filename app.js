@@ -79,26 +79,42 @@ app.post("/forecast", express.json(), (req, res) => {
                 var icon = "cdn.weatherapi.com/weather/64x64/day/113.png"
 
 
+                // const jsonResponse = {
+                // fulfillment_response: {
+                //     messages: [{
+                //         text: {
+                //             text: ["Following is the weather forecast for 3 days\n" + str],
+                //         },
+
+                //     }]
+                // },
+                // };
+
                 const jsonResponse = {
                     fulfillment_response: {
                         messages: [{
                             text: {
                                 text: ["Following is the weather forecast for 3 days\n" + str],
                             },
-                            image: {
-                                src: { rawUrl: icon }
-                            },
+
                         }]
                     },
+                    payload: {
+                        richContent: [
+                            [
+                                {
+                                    type: "image",
+                                    rawUrl: "cdn.weatherapi.com/weather/64x64/day/113.png",
+                                    accessibilityText: "Example logo"
+                                }
+                            ]
+                        ]
+                    }
                 };
                 res.status(200).send(jsonResponse);
                 console.log(jsonResponse);
-
             }
-
-
         });
-
 })
 
 app.post("/daywiseforecast", express.json(), (req, res) => {
@@ -123,8 +139,7 @@ app.post("/daywiseforecast", express.json(), (req, res) => {
                 var str1 = `Date : ${wdata[0]['date']}
                     Max Temp °C : ${wdata[0]['day'].maxtemp_c}
                     Min Temp °C: ${wdata[0]['day'].mintemp_c}
-                    Condition : ${wdata[0]['day']['condition'].text}
-                    Icon : ${wdata[0]['day']['condition'].icon}`
+                    Condition : ${wdata[0]['day']['condition'].text}`
                 console.log(str1);
 
                 const jsonResponse = {
