@@ -72,18 +72,18 @@ app.post("/forecast", express.json(), (req, res) => {
                     var str1 = `Date :, ${wdata[i]['date']}
                     Max Temp°C: ${wdata[i]['day'].maxtemp_c}
                     Min Temp °C : ${wdata[i]['day'].mintemp_c}
-                    Condition : ${wdata[i]['day'].condition.text}
-                    Icon : ${wdata[0]['day']['condition'].icon}}\n\n`
+                    Condition : ${wdata[i]['day'].condition.text}\n\n`
 
                     str = str + str1;
                 }
+                var icon = "cdn.weatherapi.com/weather/64x64/day/113.png"
 
 
                 const jsonResponse = {
                     fulfillment_response: {
                         messages: [{
                             text: {
-                                text: ["Following is the weather forecast for 3 days\n" + str],
+                                text: ["Following is the weather forecast for 3 days\n" + str + icon],
                             }
                         }]
                     },
